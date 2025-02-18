@@ -4,7 +4,7 @@ import 'package:messy_cinema/src/features/movies/presentation/movie_card.dart';
 
 class MoviesScreen extends StatelessWidget {
   const MoviesScreen({required this.movies, super.key});
-  final List<Movie> movies;
+  final Future<List<Movie>> movies;
 
   @override
   Widget build(BuildContext context) {
@@ -13,17 +13,29 @@ class MoviesScreen extends StatelessWidget {
         leading: const Icon(Icons.local_movies_rounded),
         title: const Text("Batch #8 Kino"),
       ),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [for (final movie in movies) MovieCard(movie: movie)],
-            ),
-          ],
-        ),
-      ),
+      body: FutureBuilder(
+          future: movies,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        for (final movie in snapshot.data!)
+                          MovieCard(movie: movie)
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            }
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }),
     );
   }
 }

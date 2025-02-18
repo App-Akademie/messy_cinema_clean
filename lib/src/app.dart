@@ -4,7 +4,7 @@ import 'package:messy_cinema/src/features/movies/presentation/movies_screen.dart
 
 class App extends StatelessWidget {
   const App({required this.movies, super.key});
-  final List<Movie> movies;
+  final Future<List<Movie>> movies;
 
   @override
   Widget build(BuildContext context) {

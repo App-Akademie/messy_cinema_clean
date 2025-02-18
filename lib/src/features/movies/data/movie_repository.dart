@@ -2,5 +2,5 @@
 import 'package:messy_cinema/src/features/movies/data/movie.dart';
 
 abstract class MovieRepository {
-  List<Movie> getMovies();
+  Future<List<Movie>> getMovies();
 }
